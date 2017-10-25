@@ -1,0 +1,16 @@
+---
+title: "p8105_hw4_jr3755_p1"
+author: "Junting Ren Uni:jr3755"
+date: "October 24, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+pup <- read_csv("./FAS_pups.csv")
+```
+
