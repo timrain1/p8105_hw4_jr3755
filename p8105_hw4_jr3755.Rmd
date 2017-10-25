@@ -8,9 +8,14 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(janitor)
 ```
 
-```{r}
-pup <- read_csv("./FAS_pups.csv")
+#Clean the data into long format by project lead jr3755
+```{r message = FALSE}
+pup <- read_csv("./FAS_pups.csv") %>% 
+  clean_names() %>%
+  gather(key = "PD_outcome", value = "Days",pd_ears:pd_walk)
+pup
 ```
 
