@@ -9,9 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(janitor)
+library(ggridges)
+knitr::opts_chunk$set(
+  out.width = "90%",
+  out.height = "90%"
+)
 ```
 
-#Clean the data into long format by project lead jr3755
+### Clean the data into long format by project lead jr3755
+
 ```{r message = FALSE}
 pup <- read_csv("./FAS_pups.csv") %>% 
   clean_names() %>%
@@ -19,3 +25,20 @@ pup <- read_csv("./FAS_pups.csv") %>%
 pup
 ```
 
+### Plot showing the distribution of post-natal days for each developmental landmark by collaborator rz2375
+
+```{r message = FALSE}
+pup %>%
+  filter(!(is.na(Days))) %>%
+  separate(PD_outcome, into = c("remove", "PD_outcome"), sep = "_") %>%
+  select(-remove) %>%
+  ggplot(aes(x = Days, y = PD_outcome, fill = PD_outcome)) +
+  geom_density_ridges(alpha = .5, size = .2) +
+  labs(title = "Post-natal days for each developmental landmark",
+       x = "Post-natal days",
+       y = "Developmental landmark") +
+  theme_classic() +
+  theme(legend.position = "bottom")
+```
+
+As we can see from the ridge plot above, the distribution of post-natal days differs significantly across different developmental landmarks. The distributions in eyes and ears are more dense, while walk and pivot are more spread. And the eyes has the largest overrall post-natal days, followed by walk, pivot and ears has the smallest.
